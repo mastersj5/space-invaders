@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Space Invaders - WebGPU</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #050505;
+        }
+        canvas {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+        }
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #0ff;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 24px;
+            text-shadow: 0 0 10px #0ff;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading">INITIALIZING WEBGPU SYSTEM...</div>
+    <script>
+        // Simple script to hide the loading text once the canvas appears
+        const observer = new MutationObserver((mutations) => {
+            for (const mutation of mutations) {
+                if (mutation.addedNodes.length) {
+                    for (const node of mutation.addedNodes) {
+                        if (node.tagName === 'CANVAS') {
+                            document.getElementById('loading').style.display = 'none';
+                            observer.disconnect();
+                        }
+                    }
+                }
+            }
+        });
+        observer.observe(document.body, { childList: true });
+    </script>
+</body>
+</html>
